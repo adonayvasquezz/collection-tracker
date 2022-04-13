@@ -8,5 +8,6 @@ export interface Collection {
     year:        string;
     condition:   string;
     location:    string;
+    image:       string;
     __v:         number;
 }
