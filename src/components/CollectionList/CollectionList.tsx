@@ -19,19 +19,20 @@ const CollectionList = () => {
     const setCollections = () => {
         apiResources('GET', 'tracker')
             .then(resp => {
-                let collectionItems = resp.map((collection: Collection, id: number) => {
-                    return <CollectionItem collection={collection} key={id} />
-                });
-                setCollection(collectionItems);
+                if (resp.length>0) {
+                    let collectionItems = resp.map((collection: Collection, id: number) => {
+                        return <CollectionItem collection={collection} key={id} />
+                    });
+                    setCollection(collectionItems);
+                } 
             })
-            .catch(console.log);
+            .catch(console.error);
     }
-
 
     return (
         <div className={styles.containerListCards}>
             <div className="row">
-                {collection}
+                {collection ? collection : 'No data'}
             </div>
         </div>
 

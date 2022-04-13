@@ -7,13 +7,16 @@ export const apiResources = async (method = 'GET', endpoint:string) => {
         method: method,
         headers: { 'Content-Type': 'application/json' }
     }
+    let res;
     
     try {
         let response = await fetch(`${API_URL}${endpoint}`, requestOptions);
-        let data = await response.json();
-        
-        return data
+        res = await response.json();
+        return res
     } catch (error) {
         console.error('Error: ', error);
+        res = error;
     }
+
+    return res;
 }
