@@ -3,12 +3,12 @@ import { Collection } from '../../interfaces/collection';
 import styles from './CollectionItem.module.css';
 
 interface Props {
-    collection: Collection;
-  };
+  collection: Collection;
+};
 
 const CollectionItem: FC<Props> = ({collection}, {id}) => {
   return (
-    <div key={id} className="col-6 col-md-4 col-lg-4 card">
+    <div key={id} className="col-12 col-md-6 col-lg-4 card">
       <img src={collection.image} className={styles.imgCover} alt={collection.name}></img>
       <div className="card-body">
         <h5 className="card-title">{collection.name}</h5>
