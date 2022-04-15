@@ -9,7 +9,7 @@ const Header = () => {
             <Link className="navbar-brand text-warning" to="/">
                 Collection Tracker
             </Link>
-            <button className={`btn btn-warning ${styles.addButton}`} type="button">Agregar Colección</button>
+            
         </div>
     </nav>
   )

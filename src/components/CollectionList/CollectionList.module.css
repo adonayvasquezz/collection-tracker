@@ -2,3 +2,17 @@
     width: 80vw;
     margin: auto;
 }
+
+.buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin: .5rem 0;
+}
+
+.addButton {
+    font-weight: 600;
+    transition: all .2s ease-in-out;
+}
+.addButton:hover {
+    transform: scale(1.03);
+}

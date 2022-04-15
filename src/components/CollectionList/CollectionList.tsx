@@ -5,7 +5,6 @@ import CollectionItem from "../CollectionItem/CollectionItem";
 import styles from './CollectionList.module.css';
 
 
-
 const CollectionList = () => {
 
     const [collection, setCollection] = useState();
@@ -16,6 +15,7 @@ const CollectionList = () => {
 
     }, [])
 
+    // Get and render the collections
     const setCollections = () => {
         apiResources('GET', 'tracker')
             .then(resp => {
@@ -31,11 +31,13 @@ const CollectionList = () => {
 
     return (
         <div className={styles.containerListCards}>
+            <div className={styles.buttonContainer}>
+                <button className={`btn btn-warning ${styles.addButton}`} type="button">Agregar Colección</button>
+            </div>
             <div className="row">
                 {collection ? collection : 'No data'}
             </div>
         </div>
-
     )
 }
 
