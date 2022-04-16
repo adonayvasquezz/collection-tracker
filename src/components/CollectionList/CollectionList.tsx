@@ -4,7 +4,6 @@ import { Collection } from "../../interfaces/collection";
 import { apiDeleteCollection, apiGetAll } from "../../resources/apiResources";
 import CollectionItem from "../CollectionItem/CollectionItem";
 import styles from './CollectionList.module.css';
-import { modalStyles } from '../../utilities';
 import FormCollection from "../FormCollection/FormCollection";
 
 
@@ -64,7 +63,7 @@ const CollectionList = () => {
             <ReactModal
                 isOpen={modalOpen}
                 onRequestClose={closeModal}
-                style={modalStyles}
+                className={styles.modal}
                 contentLabel="Add collection form"
             >
                 <FormCollection closeModal = {closeModal} />
