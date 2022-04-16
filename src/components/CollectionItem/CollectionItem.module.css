@@ -3,3 +3,7 @@
     height:30vh;
     object-fit: cover;
 }
+
+.isClickeable { 
+    cursor: pointer;
+}
