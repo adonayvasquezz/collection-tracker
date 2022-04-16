@@ -41,7 +41,6 @@ const CollectionList = () => {
     }
 
     const callEditCollection = (collect:Collection):void => {
-        console.log('click editarCollection', collect);
         navigate("/", {state: collect})
         openModal();
     }

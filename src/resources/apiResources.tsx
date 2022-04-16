@@ -37,6 +37,24 @@ export const apiPostCollection = async (data: CollectionForm) => {
     }
 }
 
+export const apiPutCollection = async (data: CollectionForm, id:string) => {
+ 
+    const requestOptions = {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json'}
+    }
+    try {
+        console.log(data, JSON.stringify(data));
+        let response = await fetch(`${API_URL}${COLLECTION}/${id}`, requestOptions);
+       
+        let dataRes = await response.json();
+        console.log('Data RESOURCES: ', dataRes);
+    } catch (error) {
+        console.error('Error: ',error);
+    }
+}
+
 
 export const apiDeleteCollection = async (id:string) => {
     const requestOptions = {

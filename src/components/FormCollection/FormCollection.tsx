@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import { Collection, CollectionForm } from '../../interfaces/collection';
-import { apiPostCollection } from '../../resources/apiResources';
+import { apiPostCollection, apiPutCollection } from '../../resources/apiResources';
 import { currentDate } from '../../utilities';
 
 interface Props {
@@ -11,6 +11,7 @@ interface Props {
 const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
 
     let dataLocation = useLocation();
+    let currentData = dataLocation.state as Collection;
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -22,7 +23,6 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
     const [image, setImage] = useState('');
 
     useEffect(() => {
-        let currentData = dataLocation.state as Collection;
         if (currentData.name !== undefined) {
             setName(currentData.name);
             setDescription(currentData.description);
@@ -32,10 +32,9 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
             setCondition(currentData.condition);
             setLocation(currentData.location);
             setImage(currentData.image);
-            console.log('la fecha es ', currentData.year );
         }
         
-    }, [dataLocation.state])
+    }, [currentData])
 
     const handleSubmitForm = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
@@ -56,11 +55,13 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
 
     // Add or update a collection record
     const formRequest = async (data:CollectionForm, idCollection:string) => {
-        if (idCollection) {
-            console.log('en PUT', idCollection);
+        if (currentData.name !== undefined) {
+            apiPutCollection(data, currentData._id)
+            .then( res => console.log('Data updated'))
+            .catch(console.error);
         } else {
             apiPostCollection(data)
-            .then( res => console.log('Data enviada'))
+            .then( res => console.log('Data sent'))
             .catch(e=>console.error('Form: ', e));
         }
     }
