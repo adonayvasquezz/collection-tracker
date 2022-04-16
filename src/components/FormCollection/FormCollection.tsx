@@ -1,5 +1,6 @@
-import { FC, useState } from 'react'
-import { CollectionForm } from '../../interfaces/collection';
+import { FC, useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom';
+import { Collection, CollectionForm } from '../../interfaces/collection';
 import { apiPostCollection } from '../../resources/apiResources';
 import { currentDate } from '../../utilities';
 
@@ -8,6 +9,8 @@ interface Props {
 }
 
 const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
+
+    let dataLocation = useLocation();
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -18,6 +21,22 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
     const [location, setLocation] = useState('');
     const [image, setImage] = useState('');
 
+    useEffect(() => {
+        let currentData = dataLocation.state as Collection;
+        if (currentData.name !== undefined) {
+            setName(currentData.name);
+            setDescription(currentData.description);
+            setCategory(currentData.category);
+            setValue(currentData.value);
+            setDate(currentData.year);
+            setCondition(currentData.condition);
+            setLocation(currentData.location);
+            setImage(currentData.image);
+            console.log('la fecha es ', currentData.year );
+        }
+        
+    }, [dataLocation.state])
+
     const handleSubmitForm = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         const data:CollectionForm = {
@@ -25,13 +44,14 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
             description: description,
             category:    category,
             value:       value,
-            year:        date,
+            year:        date!==null ? date : '',
             condition:   condition,
             location:    location,
             image:       image,
         };
 
         formRequest(data, '')
+        closeModal();
     }
 
     // Add or update a collection record
@@ -65,7 +85,7 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
                         </div>
                         <div className="mb-1 mb-lg-3 col-12 col-lg-6">
                             <label >Category</label>
-                            <select className="form-select" required id="category" onChange={ e=>setCategory(e.target.value) } aria-label="collection category">
+                            <select className="form-select" required id="category" onChange={ e=>setCategory(e.target.value) } value={category} aria-label="collection category">
                                 <option value="Music">Music</option>
                                 <option value="Art" >Art</option>
                                 <option value="Coin">Coins</option>
@@ -75,16 +95,16 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
                         <div className="mb-1 mb-lg-3 col-12 col-lg-6">
                             <label >Value</label>
                             <input type="number" className="form-control" id="value" min="0" max="100000"
-                            onChange={ e=>setValue(parseInt(e.target.value)) } defaultValue={0}></input>
+                            onChange={ e=>setValue(parseInt(e.target.value)) } value={value}></input>
                         </div>
                         <div className="mb-1 mb-lg-3 col-12 col-lg-6">
                             <label >Year</label>
                             <input type="date" className="form-control" id="date" max={currentDate()} /* Max date validation */
-                            onChange={ e=>setDate(e.target.value) } defaultValue={date}></input>
+                            onChange={ e=>setDate(e.target.value) } ></input>
                         </div>
                         <div className="mb-1 mb-lg-3 col-12 col-lg-6">
                             <label >Condition</label>
-                            <select className="form-select" onChange={ e=>setCondition(e.target.value) } aria-label="collection condition">
+                            <select className="form-select" onChange={ e=>setCondition(e.target.value) } value={condition} aria-label="collection condition">
                                 <option value="New">New</option>
                                 <option value="Good" >Good</option>
                                 <option value="Damaged">Damaged</option>

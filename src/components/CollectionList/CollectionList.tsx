@@ -5,6 +5,7 @@ import { apiDeleteCollection, apiGetAll } from "../../resources/apiResources";
 import CollectionItem from "../CollectionItem/CollectionItem";
 import styles from './CollectionList.module.css';
 import FormCollection from "../FormCollection/FormCollection";
+import { useNavigate } from "react-router-dom";
 
 
 ReactModal.setAppElement('#root');
@@ -12,6 +13,7 @@ const CollectionList = () => {
 
     const [collection, setCollection] = useState();
     const [modalOpen, setModalOpen] = useState(false);
+    let navigate = useNavigate();
 
     useEffect(() => {
 
@@ -25,7 +27,7 @@ const CollectionList = () => {
             .then(resp => {
                 if (resp.length>0) {
                     let collectionItems = resp.map((collection: Collection, id: number) => {
-                        return <CollectionItem collection={collection} key={id} callDeleteCollection={callDeleteCollection} />
+                        return <CollectionItem collection={collection} key={id} callEditCollection={callEditCollection} callDeleteCollection={callDeleteCollection} />
                     });
                     setCollection(collectionItems);
                 } 
@@ -36,6 +38,17 @@ const CollectionList = () => {
     const callDeleteCollection = (idC:string):void => {
         apiDeleteCollection(idC);
         setCollections();
+    }
+
+    const callEditCollection = (collect:Collection):void => {
+        console.log('click editarCollection', collect);
+        navigate("/", {state: collect})
+        openModal();
+    }
+
+    const addCollection = () => {
+        navigate("/", {state: {}})
+        openModal();
     }
 
     const openModal = () => {
@@ -51,7 +64,7 @@ const CollectionList = () => {
             <div className={styles.buttonContainer}>
                 <button className={`btn btn-warning ${styles.addButton}`} 
                         type="button"
-                        onClick={openModal}>
+                        onClick={addCollection}>
                     Agregar Colección
                 </button>
             </div>
