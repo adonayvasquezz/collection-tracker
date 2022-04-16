@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import ReactModal from "react-modal";
 import { Collection } from "../../interfaces/collection";
-import { apiGetAll } from "../../resources/apiResources";
+import { apiDeleteCollection, apiGetAll } from "../../resources/apiResources";
 import CollectionItem from "../CollectionItem/CollectionItem";
 import styles from './CollectionList.module.css';
 import { modalStyles } from '../../utilities';
@@ -26,12 +26,17 @@ const CollectionList = () => {
             .then(resp => {
                 if (resp.length>0) {
                     let collectionItems = resp.map((collection: Collection, id: number) => {
-                        return <CollectionItem collection={collection} key={id} />
+                        return <CollectionItem collection={collection} key={id} callDeleteCollection={callDeleteCollection} />
                     });
                     setCollection(collectionItems);
                 } 
             })
             .catch(console.error);
+    }
+
+    const callDeleteCollection = (idC:string):void => {
+        apiDeleteCollection(idC);
+        setCollections();
     }
 
     const openModal = () => {

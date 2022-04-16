@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useState } from 'react'
-import { Collection } from '../../interfaces/collection';
-import { apiPost } from '../../resources/apiResources';
+import { FC, useState } from 'react'
+import { CollectionForm } from '../../interfaces/collection';
+import { apiPostCollection } from '../../resources/apiResources';
 import { currentDate } from '../../utilities';
 
 interface Props {
@@ -20,7 +20,7 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
 
     const handleSubmitForm = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        const data:Collection = {
+        const data:CollectionForm = {
             name: name,
             description: description,
             category:    category,
@@ -35,11 +35,11 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
     }
 
     // Add or update a collection record
-    const formRequest = async (data:Collection, idCollection:string) => {
+    const formRequest = async (data:CollectionForm, idCollection:string) => {
         if (idCollection) {
             console.log('en PUT', idCollection);
         } else {
-            apiPost(data, 'tracker')
+            apiPostCollection(data)
             .then( res => console.log('Data enviada'))
             .catch(e=>console.error('Form: ', e));
         }

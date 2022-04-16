@@ -1,6 +1,7 @@
-import { Collection } from "../interfaces/collection";
+import { CollectionForm } from "../interfaces/collection";
 
 const API_URL = 'http://127.0.0.1:8000/';
+const COLLECTION = 'tracker'; //API endpoint
 
 export const apiGetAll = async (method = 'GET', endpoint:string) => {
     const requestOptions = {
@@ -21,16 +22,31 @@ export const apiGetAll = async (method = 'GET', endpoint:string) => {
     return res;
 }
 
-export const apiPost = async (data: Collection, endpoint: string) => {
+export const apiPostCollection = async (data: CollectionForm) => {
     const requestOptions = {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {'Content-Type': 'application/json'}
     }
     try {
-        let response = await fetch(`${API_URL}${endpoint}`, requestOptions);
+        let response = await fetch(`${API_URL}${COLLECTION}`, requestOptions);
         let data = await response.json();
-        console.log('Data guardada: ', data);
+        console.log('Collection saved: ', data);
+    } catch (error) {
+        console.error('Error: ',error);
+    }
+}
+
+
+export const apiDeleteCollection = async (id:string) => {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'}
+    }
+    try {
+        let response = await fetch(`${API_URL}${COLLECTION}/${id}`, requestOptions);
+        let res = await response.json();
+        console.log('Collection deleted: ', res);
     } catch (error) {
         console.error('Error: ',error);
     }
