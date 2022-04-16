@@ -2,11 +2,10 @@
 // Add Modal styles
 export const modalStyles = {
     content: {
-      top: '50%',
+      top: '30%',
       left: '50%',
-      right: 'auto',
+      right: '5%',
       bottom: 'auto',
-      marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
     },
   };

@@ -1,6 +1,5 @@
 
 export interface Collection {
-    _id:         string;
     name:        string;
     description: string;
     category:    string;
@@ -9,5 +8,4 @@ export interface Collection {
     condition:   string;
     location:    string;
     image:       string;
-    __v:         number;
 }
