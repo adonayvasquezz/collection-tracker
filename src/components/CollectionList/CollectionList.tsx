@@ -6,7 +6,7 @@ import CollectionItem from "../CollectionItem/CollectionItem";
 import styles from './CollectionList.module.css';
 import FormCollection from "../FormCollection/FormCollection";
 import { useNavigate } from "react-router-dom";
-
+import store from "../../store/store";
 
 ReactModal.setAppElement('#root');
 const CollectionList = () => {
@@ -30,6 +30,7 @@ const CollectionList = () => {
                         return <CollectionItem collection={collection} key={id} callEditCollection={callEditCollection} callDeleteCollection={callDeleteCollection} />
                     });
                     setCollection(collectionItems);
+                    store.dispatch({type: 'GET_ALL', collections: resp});
                 } 
             })
             .catch(console.error);

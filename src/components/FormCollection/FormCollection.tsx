@@ -49,19 +49,22 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
             image:       image,
         };
 
-        formRequest(data, '')
+        formRequest(data)
         closeModal();
     }
 
     // Add or update a collection record
-    const formRequest = async (data:CollectionForm, idCollection:string) => {
+    const formRequest = async (data:CollectionForm) => {
         if (currentData.name !== undefined) {
             apiPutCollection(data, currentData._id)
             .then( res => console.log('Data updated'))
             .catch(console.error);
-        } else {
+        } else { 
             apiPostCollection(data)
-            .then( res => console.log('Data sent'))
+            .then( res => {
+                //store.dispatch({type: 'ADD', collection: data});
+                console.log('Data sent');
+            })
             .catch(e=>console.error('Form: ', e));
         }
     }
