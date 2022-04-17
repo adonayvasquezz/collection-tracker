@@ -1,6 +1,10 @@
 import { CollectionForm } from "../interfaces/collection";
 
-const API_URL = 'http://127.0.0.1:8000/';
+
+const API_PRODUCTION = 'https://collection-tracker-api77.herokuapp.com/';
+const API_LOCAL = 'http://127.0.0.1:9000/';
+const API_URL = API_PRODUCTION;
+
 const COLLECTION = 'tracker'; //API endpoint
 
 export const apiGetAll = async (method = 'GET', endpoint:string) => {

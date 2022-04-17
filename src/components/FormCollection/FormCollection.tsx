@@ -4,6 +4,7 @@ import { Collection, CollectionForm } from '../../interfaces/collection';
 import { apiPostCollection, apiPutCollection } from '../../resources/apiResources';
 import store from '../../store/store';
 import { currentDate } from '../../utilities';
+import noImage from '../../no-image.jpg';
 
 interface Props {
     closeModal: () => void,
@@ -45,12 +46,12 @@ const FormCollection:FC<Props> = (props:Props) => {
         const data:CollectionForm = {
             name: name,
             description: description,
-            category:    category,
+            category:    category!=='' ? category : 'Music',
             value:       value,
             year:        date!==null ? date : '',
-            condition:   condition,
+            condition:   condition!=='' ? condition : 'New',
             location:    location,
-            image:       image,
+            image:       image!=='' ? image : noImage,
         };
 
         formRequest(data)
