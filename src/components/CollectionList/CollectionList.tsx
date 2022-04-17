@@ -7,33 +7,36 @@ import styles from './CollectionList.module.css';
 import FormCollection from "../FormCollection/FormCollection";
 import { useNavigate } from "react-router-dom";
 import store from "../../store/store";
+import { useSelector } from "react-redux";
 
 ReactModal.setAppElement('#root');
 const CollectionList = () => {
 
-    const [collection, setCollection] = useState();
     const [modalOpen, setModalOpen] = useState(false);
     let navigate = useNavigate();
+    const collectionsGlobal = useSelector((state:{collections:Collection[]}) => state.collections);
 
     useEffect(() => {
-
+        
         setCollections();
-
     }, [])
 
     // Get and render the collections
     const setCollections = () => {
         apiGetAll('GET', 'tracker')
             .then(resp => {
-                if (resp.length>0) {
-                    let collectionItems = resp.map((collection: Collection, id: number) => {
-                        return <CollectionItem collection={collection} key={id} callEditCollection={callEditCollection} callDeleteCollection={callDeleteCollection} />
-                    });
-                    setCollection(collectionItems);
-                    store.dispatch({type: 'GET_ALL', collections: resp});
-                } 
+                store.dispatch({type: 'GET_ALL', collections: resp});
             })
             .catch(console.error);
+    }
+
+    const renderCollections = () => {
+        if (collectionsGlobal.length>0) {
+            let collectionItems = collectionsGlobal.map((collection: Collection, id: number) => {
+                return <CollectionItem collection={collection} key={id} callEditCollection={callEditCollection} callDeleteCollection={callDeleteCollection} />
+            });
+            return collectionItems;
+        } 
     }
 
     const callDeleteCollection = (idC:string):void => {
@@ -70,7 +73,7 @@ const CollectionList = () => {
             </div>
 
             <div className="row">
-                {collection ? collection : 'No data'}
+                { renderCollections() ? renderCollections() : 'No data'}
             </div>
 
             <ReactModal
