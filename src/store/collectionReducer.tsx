@@ -1,13 +1,13 @@
-import { CollectionForm } from "../interfaces/collection";
+import { Collection } from "../interfaces/collection";
 
 interface collections {
-    collections:CollectionForm[]
+    collections:Collection[]
 }
 
 interface actionInterface {
     type:string, 
-    collection?:CollectionForm, 
-    collections?:CollectionForm[]
+    collection?:Collection, 
+    collections?:Collection[]
 }
 
 const initialState = {
@@ -19,21 +19,23 @@ export const collectionReducer = (state:collections = initialState, action: acti
     
     switch (action.type) {
         case 'GET_ALL':
-            console.log('En reducer GET_ALL: ', state);
             if (action.collections) {
                 currentState = action.collections
             } 
             return { ...state, collections: currentState}
         case 'ADD':
-            console.log('En reducer ADD: ', state);
             if (action.collection) {
                 currentState.unshift(action.collection);
-                console.log('Nuevo estado: ', currentState);
             }
 
             return { ...state, collections: currentState  }
         case 'EDIT':
-            return { ...state, collections: state.collections  }
+            if (action.collection) {
+                let dataEdited = state.collections.map((e:Collection) => e._id===action.collection?._id ? action.collection : e);
+                currentState = dataEdited;
+                //console.log('Edit estado: ', currentState, action.collection);
+            }
+            return { ...state, collections: currentState  }
         case 'DELETE':
                 return { ...state, collections: state.collections  }
         default:

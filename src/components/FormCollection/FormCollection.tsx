@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import { Collection, CollectionForm } from '../../interfaces/collection';
 import { apiPostCollection, apiPutCollection } from '../../resources/apiResources';
+import store from '../../store/store';
 import { currentDate } from '../../utilities';
 
 interface Props {
@@ -23,6 +24,7 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
     const [image, setImage] = useState('');
 
     useEffect(() => {
+        // Fill edit data into the form
         if (currentData.name !== undefined) {
             setName(currentData.name);
             setDescription(currentData.description);
@@ -57,7 +59,13 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
     const formRequest = async (data:CollectionForm) => {
         if (currentData.name !== undefined) {
             apiPutCollection(data, currentData._id)
-            .then( res => console.log('Data updated'))
+            .then( res => {
+                let collectionObject: Collection = {
+                    ...data,
+                    _id:currentData._id
+                }
+                store.dispatch({type: 'EDIT', collection: collectionObject});
+            })
             .catch(console.error);
         } else { 
             apiPostCollection(data)
@@ -71,7 +79,7 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
 
   return (
     <>
-        <div className='pt-4 px-5 fs-3 fw-bold'>Add new Collection</div>
+        <div className='pt-4 px-5 fs-3 fw-bold'>{ currentData.name !== undefined ? 'Edit Collection' : 'Add new Collection'}</div>
         <div className="container d-flex justify-content-center px-5">
             
             <div className="col-12 mt-3 ">
