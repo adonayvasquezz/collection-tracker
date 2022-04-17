@@ -6,10 +6,11 @@ import store from '../../store/store';
 import { currentDate } from '../../utilities';
 
 interface Props {
-    closeModal: () => void
+    closeModal: () => void,
+    setCollections: () => void
 }
 
-const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
+const FormCollection:FC<Props> = (props:Props) => {
 
     let dataLocation = useLocation();
     let currentData = dataLocation.state as Collection;
@@ -53,7 +54,7 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
         };
 
         formRequest(data)
-        closeModal();
+        props.closeModal();
     }
 
     // API calls for add or update a collection record 
@@ -73,7 +74,7 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
             apiPostCollection(data)
             .then( res => {
                 //store.dispatch({type: 'ADD', collection: data});
-                console.log('Data sent');
+                props.setCollections();
             })
             .catch(e=>console.error('Form: ', e));
         }
@@ -136,7 +137,7 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
                         </div>
                         
                         <div className="d-flex justify-content-center my-2">
-                            <button className="btn btn-secondary mx-2" onClick={closeModal} >Cancel</button>
+                            <button className="btn btn-secondary mx-2" onClick={props.closeModal} >Cancel</button>
                             <button type="submit" className="btn btn-success mx-2">Submit</button>
                         </div>
                     </div>

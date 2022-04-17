@@ -31,7 +31,7 @@ export const apiPostCollection = async (data: CollectionForm) => {
     try {
         let response = await fetch(`${API_URL}${COLLECTION}`, requestOptions);
         let data = await response.json();
-        console.log('Collection saved: ', data);
+        return data; 
     } catch (error) {
         console.error('Error: ',error);
     }
@@ -45,11 +45,9 @@ export const apiPutCollection = async (data: CollectionForm, id:string) => {
         headers: { 'Content-Type': 'application/json'}
     }
     try {
-        console.log(data, JSON.stringify(data));
         let response = await fetch(`${API_URL}${COLLECTION}/${id}`, requestOptions);
-       
         let dataRes = await response.json();
-        console.log('Data RESOURCES: ', dataRes);
+        return dataRes;
     } catch (error) {
         console.error('Error: ',error);
     }
@@ -64,7 +62,7 @@ export const apiDeleteCollection = async (id:string) => {
     try {
         let response = await fetch(`${API_URL}${COLLECTION}/${id}`, requestOptions);
         let res = await response.json();
-        console.log('Collection deleted: ', res);
+        return res;
     } catch (error) {
         console.error('Error: ',error);
     }

@@ -30,6 +30,7 @@ const CollectionList = () => {
             .catch(console.error);
     }
 
+    // Render collections from global state
     const renderCollections = () => {
         if (collectionsGlobal.length>0) {
             let collectionItems = collectionsGlobal.map((collection: Collection, id: number) => {
@@ -88,7 +89,7 @@ const CollectionList = () => {
                 className={styles.modal}
                 contentLabel="Add collection form"
             >
-                <FormCollection closeModal = {closeModal} />
+                <FormCollection closeModal={closeModal} setCollections={setCollections} />
             </ReactModal>
         </div>
     )
