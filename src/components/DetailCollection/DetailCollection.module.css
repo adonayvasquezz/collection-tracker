@@ -1,0 +1,33 @@
+.imgContainer {
+    display: flex;
+    justify-content: center;
+}
+.imgContainer img {
+    object-fit: cover;
+    height:60vh;
+    border-radius: .5rem;
+}
+
+.imgContainer img:hover {
+    opacity: 0.9;
+    transition: .3s;
+}
+.categoryTxt {
+    /* rgb(48, 120, 48); */
+    background-color: rgb(230, 128, 5);
+    padding: .5rem 3rem;
+    border-radius: .3rem;
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+}
+
+@media only screen and (max-width: 600px) {
+    .imgContainer img {
+        object-fit: cover;
+        height:30vh;
+        border-radius: .5rem;
+    }
+
+}
+
+

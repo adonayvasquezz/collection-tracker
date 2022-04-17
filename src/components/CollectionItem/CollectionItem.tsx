@@ -19,7 +19,7 @@ const CollectionItem: FC<Props> = (props, {id}) => {
         
       </div>
       <div className='d-flex justify-content-between mb-2'>
-        <Link to="/collection" className="btn btn-secondary">Watch Details</Link>
+        <Link to={`/collection/${props.collection._id}`} state={props.collection} className="btn btn-secondary">Watch Details</Link>
         <span>
           <i className={`fas fa-edit mx-2 link-success ${styles.isClickeable}`} onClick={() => props.callEditCollection(props.collection) } />
           <i className={`fas fa-trash-alt mx-2 link-danger ${styles.isClickeable}`} onClick={() => props.callDeleteCollection(props.collection._id)}  />
