@@ -40,8 +40,14 @@ const CollectionList = () => {
     }
 
     const callDeleteCollection = (idC:string):void => {
-        apiDeleteCollection(idC);
-        setCollections();
+        let deleteCollection = collectionsGlobal.find(e => e._id===idC);
+        apiDeleteCollection(idC)
+            .then(res => {
+                store.dispatch({type: 'DELETE', collection: deleteCollection});
+            })
+            .catch(console.error);
+        
+        //setCollections();
     }
 
     const callEditCollection = (collect:Collection):void => {

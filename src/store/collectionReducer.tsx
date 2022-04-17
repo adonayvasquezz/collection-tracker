@@ -37,7 +37,12 @@ export const collectionReducer = (state:collections = initialState, action: acti
             }
             return { ...state, collections: currentState  }
         case 'DELETE':
-                return { ...state, collections: state.collections  }
+            if (action.collection) {
+                console.log('en DELETE REDUCER ', action.collection);
+                let dataDelete = state.collections.filter(e => e._id !== action.collection?._id);
+                currentState = dataDelete;
+            }
+            return { ...state, collections: currentState  }
         default:
             return state;
     }

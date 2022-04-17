@@ -24,7 +24,7 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
     const [image, setImage] = useState('');
 
     useEffect(() => {
-        // Fill edit data into the form
+        // Fill editable data into the form
         if (currentData.name !== undefined) {
             setName(currentData.name);
             setDescription(currentData.description);
@@ -38,6 +38,7 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
         
     }, [currentData])
 
+    // Create data object for add or update collection
     const handleSubmitForm = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         const data:CollectionForm = {
@@ -55,7 +56,7 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
         closeModal();
     }
 
-    // Add or update a collection record
+    // API calls for add or update a collection record 
     const formRequest = async (data:CollectionForm) => {
         if (currentData.name !== undefined) {
             apiPutCollection(data, currentData._id)
@@ -64,6 +65,7 @@ const FormCollection:FC<Props> = ({ closeModal=()=>{} }) => {
                     ...data,
                     _id:currentData._id
                 }
+                // Global state updated
                 store.dispatch({type: 'EDIT', collection: collectionObject});
             })
             .catch(console.error);
